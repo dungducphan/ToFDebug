@@ -15,7 +15,7 @@ Run::Run() {
     cfd->SetParam(kGSFilterWindow, 17);
     cfd->SetParam(kGSFilterDegree, 3);
     cfd->SetParam(kConsecutiveHitSeperationDurationInTicks, 10);
-    cfd->SetParam(kShortRawHitIgnoringDurationInTicks, 10);
+    cfd->SetParam(kShortRawHitIgnoringDurationInTicks, 5);
     cfd->SetParam(kNSamplingPoints, 1024);
     cfd->SetParam(kTimeSamplingInterval, 0.2);
 
@@ -41,9 +41,9 @@ void Run::Go() {
     Channel5.baseline  = 0;
     Channel3.noiseband = 0;
     Channel5.noiseband = 0;
-    TH1D* tofHist = new TH1D("", "", 100, 0, 20);
-    for (int idx = 0; idx < 100; idx++) {
-//    for (int idx = 0; idx < trA->GetEntries(); idx++) {
+    TH1D* tofHist = new TH1D("", "", 200, 0, 10);
+//    for (int idx = 0; idx < 100; idx++) {
+    for (int idx = 0; idx < trA->GetEntries(); idx++) {
         trA->GetWaveformChannel(idx, 3, Channel3.waveform);
         trA->GetWaveformChannel(idx, 5, Channel5.waveform);
         std::vector<uint16_t> wf;
@@ -78,6 +78,7 @@ void Run::Go() {
 
     TCanvas* c = new TCanvas();
     tofHist->Draw();
+    tofHist->Fit("gaus[3]", "RQ", 0, 4);
     c->SaveAs("testDS-US.pdf");
 }
 

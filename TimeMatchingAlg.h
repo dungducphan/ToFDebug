@@ -13,8 +13,8 @@ public:
     virtual ~TimeMatchingAlg();
 
     void  SetCoincidenceTimeWindow(T coincidenceWindowLowerLim, T coincidenceWindowUpperLim, T timeSamplingInterval);
-    virtual std::vector<std::pair<T, T>> GetAllTimeOfFlight(std::map<size_t, hit_t<T> > allCFDHitsInATriggerUpstream, std::map<size_t, hit_t<T> > allCFDHitsInATriggerDownstream);
-    virtual std::vector<std::pair<T, T>> GetAllTimeOfFlightExperimental(std::map<size_t, hit_t<T> > allCFDHitsInATriggerUpstream, std::map<size_t, hit_t<T> > allCFDHitsInATriggerDownstream, T meanUS, T meanDS, T stdDevUS, T stdDevDS);
+    virtual std::vector<std::pair<T, T>> GetAllTimeOfFlight(std::map<T, hit_t<T> > allCFDHitsInATriggerUpstream, std::map<T, hit_t<T> > allCFDHitsInATriggerDownstream);
+    virtual std::vector<std::pair<T, T>> GetAllTimeOfFlightExperimental(std::map<T, hit_t<T> > allCFDHitsInATriggerUpstream, std::map<T, hit_t<T> > allCFDHitsInATriggerDownstream, T meanUS, T meanDS, T stdDevUS, T stdDevDS);
 
 private:
     T _CoincidenceWindowLowerLim;
@@ -23,7 +23,7 @@ private:
     std::vector<std::pair<T, T> > _AllTOFs;
 
 private:
-    std::vector<size_t> CheckInCoincidenceWindow(size_t hitStartUpstream, std::map<size_t, hit_t<T> > htStartDownstreamVector);
+    std::vector<T> CheckInCoincidenceWindow(T hitStartUpstream, std::map<T, hit_t<T> > htStartDownstreamVector);
 };
 
 template class TimeMatchingAlg<double>;

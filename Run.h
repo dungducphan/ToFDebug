@@ -14,7 +14,7 @@ struct WaveformStruct {
     Double_t* waveform;
     Double_t  baseline;
     Double_t  noiseband;
-    std::map<size_t, hit_t<double> > hitCol;
+    std::map<double, hit_t<double> > hitCol;
 };
 
 class Run {

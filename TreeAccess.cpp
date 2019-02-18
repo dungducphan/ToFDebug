@@ -4,11 +4,11 @@
 
 TreeAccess::TreeAccess(TTree *tree) : fChain(0) {
     if (tree == 0) {
-        TFile *f = (TFile *) gROOT->GetListOfFiles()->FindObject("../ToF.root");
+        TFile *f = (TFile *) gROOT->GetListOfFiles()->FindObject("../ToFRecoCFD.root.PaddleRun1");
         if (!f || !f->IsOpen()) {
-            f = new TFile("../ToF.root");
+            f = new TFile("../ToFRecoCFD.root.PaddleRun1");
         }
-        TDirectory *dir = (TDirectory *) f->Get("../ToF.root:/cfd");
+        TDirectory *dir = (TDirectory *) f->Get("../ToFRecoCFD.root.PaddleRun1:/cfd");
         dir->GetObject("WaveformTree", tree);
 
     }

@@ -70,7 +70,7 @@ public:
     void SetWaveform(std::vector<uint16_t>& waveform);
     void SetParam(CFDParams param, T value);
 
-    inline const std::map<size_t, hit_t<T> >& GetHitCollection() const { return _HitCollection; }
+    inline const std::map<T, hit_t<T> >& GetHitCollection() const { return _HitCollection; }
     inline const T& GetPedestal() const { return _PedestalInADC; }
     inline const T& GetNoiseSigma() const { return _NoiseSigmaInADC; }
     inline const T& GetCFDThreshold() const { return _CFDThresholdInADC; }
@@ -85,7 +85,7 @@ private:
     T _CFDThresholdInADC;
 
     std::map<CFDParams, T> _CFDParamSet;
-    std::map<size_t, hit_t<T> > _HitCollection;
+    std::map<T, hit_t<T> > _HitCollection;
 
 private:
     virtual void FindPedestal();

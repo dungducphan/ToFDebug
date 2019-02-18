@@ -171,6 +171,7 @@ template<class T>
 bool CFDHitFinder<T>::BackwardFindingOfHitStart(size_t hitPeakTimeIndex, T hitPeakValue, T& hitStartTimeIndex, T& hitRiseTimeInIndex) {
     bool isThisHitContainedFromTheRisingEdge = true;
     _CFDThresholdInADC = _PedestalInADC - _CFDParamSet[kCFDThreshold] * (_PedestalInADC - hitPeakValue);
+    //std::cout << "CFD Threshold: " <<  _CFDThresholdInADC << std::endl;
 
     size_t tmp_index = hitPeakTimeIndex;
     while (_WaveformADCNanosec.at(tmp_index) < _CFDThresholdInADC) {
@@ -182,17 +183,17 @@ bool CFDHitFinder<T>::BackwardFindingOfHitStart(size_t hitPeakTimeIndex, T hitPe
     }
 
     T V1 = _WaveformADCNanosec.at(tmp_index);
+    //std::cout << "Below Threshold: " <<  V1 << std::endl;
     T V2 = _WaveformADCNanosec.at(tmp_index - 1);
+    //std::cout << "Above Threshold: " <<  V2 << std::endl;
     size_t t1 = tmp_index;
     size_t t2 = tmp_index - 1;
-    if (_WaveformADCNanosec.at(tmp_index - 1) == _CFDThresholdInADC) {
-        hitStartTimeIndex = tmp_index - 1;
-    } else if (_WaveformADCNanosec.at(tmp_index - 1) < _CFDThresholdInADC) {
-        T slope = (V2 - V1) / ((T)t2 - (T)t1);
-        hitStartTimeIndex = (_CFDThresholdInADC - V1) / slope + (T)t1;
-        T hitCrossingPedestalTimeIndex = (_PedestalInADC - V1) / slope + (T)t1;
-        hitRiseTimeInIndex = (T)hitPeakTimeIndex - hitCrossingPedestalTimeIndex;
-    }
+
+    T slope = (V2 - V1) / ((T)t2 - (T)t1);
+    hitStartTimeIndex = (_CFDThresholdInADC - V1) / slope + (T)t1;
+    //std::cout << "hit Start: " << hitStartTimeIndex << std::endl;
+    T hitCrossingPedestalTimeIndex = (_PedestalInADC - V1) / slope + (T)t1;
+    hitRiseTimeInIndex = (T)hitPeakTimeIndex - hitCrossingPedestalTimeIndex;
 
     return isThisHitContainedFromTheRisingEdge;
 }
